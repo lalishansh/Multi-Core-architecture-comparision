@@ -77,11 +77,11 @@ class Model_OurPipelining: public ModelInterface
 				is_available = false;
 			}
 		};
-		const uint32_t num_of_main_threads = thread_pool.size () - 3;
+		const uint32_t num_of_main_threads = uint32_t (thread_pool.size ()*0.85f);
 		// Note: Although Handle is not thread safe, it dosen't matter as only one thread will try to write into a handle and only one will try to acquire it
 		std::vector<Handle> frame_rail (num_of_main_threads-1); // of num_threads size - 1, every new frame will be extracted from producer, every thread will promote it till the last one where it will be popped out
 		// Here since the 0th thread will extract frame from frame channel
-		// Assigning 1 thread for miscelleneous tasks
+		// Assigning 1/5 thread for miscelleneous tasks
 		Channel<ADummyOperatableBlock> miscelleneous_task_channel;
 		std::mutex miscelleneous_sync_mutex;
 		auto task_thread = [this](Channel<ADummyOperatableBlock>* task_channel, std::vector<clock_t>* completed_tasks_time, std::vector<std::vector<std::string_view>>* completed_tasks_stack, Stats* stats, std::mutex* sync_mutex) {
