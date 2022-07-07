@@ -1,0 +1,159 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "VCPKG_MANIFEST_MODE": true,
+                "VCPKG_MANIFEST_INSTALL": true,
+                "VCPKG_PREFER_SYSTEM_LIBS": true
+            }
+        },
+
+        {
+            "name": "64-bit",
+            "hidden": true,
+            "inherits": "base",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "VCPKG_TARGET_ARCHITECTURE": "x64"
+            }
+        },
+        {
+            "name": "win64",
+            "hidden": true,
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "inherits": [ "64-bit" ],
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        },
+
+        {
+            "name": "visual-studio",
+            "hidden": true,
+            "generator": "Visual Studio 17 2022"
+        },{
+            "name": "ninja",
+            "hidden": true,
+            "generator": "Ninja"
+        },
+
+        {
+            "name": "use-msvc",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            }
+        },{
+            "name": "use-clang",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },{
+            "name": "use-gcc",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+
+        {
+            "name": "win64-vs-msvc",
+            "displayName": "Visual Studio - MSVC",
+            "inherits": [ "win64", "visual-studio" ]
+        },{
+            "name": "win64-vs-clang",
+            "displayName": "Visual Studio - LLVM.Clang",
+            "inherits": [ "win64", "visual-studio", "use-clang" ],
+            "toolset": "ClangCL"
+        },{
+            "name": "win64-ninja-clang",
+            "displayName": "Windows, Ninja - LLVM.Clang",
+            "inherits": [ "win64", "ninja", "use-clang" ]
+        },{
+            "name": "win64-ninja-msvc",
+            "displayName": "Windows, Ninja - MSVC",
+            "inherits": [ "win64", "ninja", "use-msvc" ]
+        },{
+            "name": "linux-ninja-clang",
+            "displayName": "Linux, Ninja - LLVM.Clang",
+            "inherits": [ "64-bit", "ninja", "use-clang" ]
+        },{
+            "name": "linux-ninja-gcc",
+            "displayName": "Linux, Ninja - GCC",
+            "inherits": [ "64-bit", "ninja", "use-gcc" ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "win64-vs-msvc-d",
+            "displayName": "Debug",
+            "configurePreset": "win64-vs-msvc",
+            "configuration": "Debug",
+            "verbose": true
+        },
+        {
+            "name": "win64-vs-msvc-r",
+            "displayName": "Release",
+            "configurePreset": "win64-vs-msvc",
+            "configuration": "Release"
+        },
+        {
+            "name": "win64-vs-clang-d",
+            "displayName": "Debug",
+            "configurePreset": "win64-vs-clang",
+            "configuration": "Debug",
+            "verbose": true
+        },
+        {
+            "name": "win64-vs-clang-r",
+            "displayName": "Release",
+            "configurePreset": "win64-vs-clang",
+            "configuration": "Release"
+        },
+        {
+            "name": "win64-ninja-clang-d",
+            "displayName": "Debug",
+            "configurePreset": "win64-ninja-clang",
+            "configuration": "Debug",
+            "verbose": true
+        },
+        {
+            "name": "win64-ninja-clang-r",
+            "displayName": "Release",
+            "configurePreset": "win64-ninja-clang",
+            "configuration": "Release"
+        },
+        {
+            "name": "win64-ninja-msvc-d",
+            "displayName": "Debug",
+            "configurePreset": "win64-ninja-msvc",
+            "configuration": "Debug",
+            "verbose": true
+        },
+        {
+            "name": "win64-ninja-msvc-r",
+            "displayName": "Release",
+            "configurePreset": "win64-ninja-msvc",
+            "configuration": "Release"
+        }
+    ]
+}

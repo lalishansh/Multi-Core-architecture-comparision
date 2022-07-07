@@ -1,0 +1,12 @@
+**/*.*
+out 
+# vcpkg adds some non-extension files
+
+!/.gitignore
+!/CMakePresets.json
+!/vcpkg.json
+
+!/TheProject/**/*[.cpp, .cxx, .hxx, .hpp, .h]
+!/TheProject/CMakeLists.txt
+!/CMakeLists.txt
+!/log/*.txt
