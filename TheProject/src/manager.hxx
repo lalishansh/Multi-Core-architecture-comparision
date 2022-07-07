@@ -15,7 +15,7 @@ public:
 		LOG_info (__FUNCSIG__);
 		++m_RunNumber;
 
-		for (uint32_t pool_size: {11}) {
+		for (uint32_t pool_size: {5, 7, 9, 11}) {
 			LOG_trace("Fpo Pool Size: {:d}", pool_size);
 			for (ModelInterface* model: models) {
 				for (auto& a_thread: worker_threads)
